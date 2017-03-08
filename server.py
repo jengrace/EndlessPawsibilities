@@ -20,7 +20,7 @@ app.jinja_env.undefined = StrictUndefined
 def index():
     """Homepage. Displays list of rescues"""
 
-    title = 'My page'
+    title = 'Endless Pawsilbilities'
     rescues = Rescue.query.all()
 
     return render_template('homepage.html',
@@ -46,12 +46,12 @@ def load_rescue_info(rescue_id):
 @app.route('/rescue/<int:rescue_id>/animal/<int:animal_id>')
 def load_animal_info(rescue_id, animal_id):
     """ Displays details of each animal """
-
+    rescue_info = c.get_rescue(rescue_id)
     animal_info = c.get_animal(animal_id)
     title = animal_info.name
 
     return render_template('animal_info.html', animal_info=animal_info,
-                           title=title)
+                           rescue_info=rescue_info, title=title)
 
 
 @app.route('/admin/<int:admin_id>')
@@ -168,7 +168,7 @@ def add_rescue_success():
 def admin_login_form():
     """ Show login page for admins only. """
 
-    title = 'Login'
+    title = 'Endless Pawsilbilities'
 
     return render_template("admin_login_page.html",
                            title=title)
@@ -214,7 +214,7 @@ def admin_signup():
                            title=title)
 
 
-@app.route('/handle-loading')
+@app.route('/load-animals')
 def handle_dynamic_loading():
     rescue_id = request.args.get("rescueid")
     counter = int(request.args.get("counter"))
@@ -225,21 +225,22 @@ def handle_dynamic_loading():
     for animal in animals:
         animal_id = animal.animal_id
         animal_img = animal.img_url
-        a = '<br><a href = "/rescue/%s/animal/%s"><img alt="portrait" src = "/%s"></a><br>' % (rescue_id, animal_id, animal_img)
+        #a = '<br><a href = "/rescue/%s/animal/%s"><img alt="portrait" src = "/%s"></a><br>' % (rescue_id, animal_id, animal_img)
+        a = '<div class="col-lg-4"><img class="img-square" src="/%s" alt="Generic placeholder image" width="140" height="140"><h2>%s</h2><p><a class="btn btn-default" href="/rescue/%s/animal/%s" role="button">View details &raquo;</a></p><br></div>' % (animal_img, animal.name, rescue_id,  animal_id)
         my_html = my_html + a
     return my_html
 
 if __name__ == "__main__":
     # We have to set debug=True here, since it has to be True at the
     # point that we invoke the DebugToolbarExtension
-    app.debug = True
-    app.jinja_env.auto_reload = app.debug  # make sure templates, etc. are not cached in debug mode
+    #app.debug = True
+    #app.jinja_env.auto_reload = app.debug  # make sure templates, etc. are not cached in debug mode
 
     connect_to_db(app)
 
     # Use the DebugToolbar
-    DebugToolbarExtension(app)
-    app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
+    #DebugToolbarExtension(app)
+    #app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 
     # File uploads
     UPLOAD_FOLDER = 'static/images/'

@@ -1,12 +1,22 @@
 {% extends 'base.html' %}
 {% block content %}
 
-  <form action='/handle-admin-login' method='POST'>
-    Email: <input type='text' name='email'></input><br>
-    <br>
-    Password: <input type='password' name='password'></input><br>
-    <br>
-    <input type='submit' value='Login'></input>
+  <form action='/handle-admin-login' class="form-signin" method='POST'>
+    <h2 class="form-signin-heading">Please sign in</h2>
+    <label for="inputEmail" class="sr-only">Email address</label>
+    <input type="email" id="inputEmail" class="form-control" placeholder="Email address" name="email" required autofocus>
+    <label for="inputPassword" class="sr-only">Password</label>
+    <input type="password" id="inputPassword" class="form-control" placeholder="Password" name="password" required>
+    <div class="checkbox">
+      <label>
+        <input type="checkbox" value="remember-me"> Remember me
+      </label>
+    </div>
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
   </form>
+
+  <footer>
+        <p class="pull-right"><a href="/">Back to Endless Pawsibilities</a></p>
+  </footer>
 
 {% endblock %}

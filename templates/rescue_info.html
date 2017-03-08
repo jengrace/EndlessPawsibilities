@@ -1,7 +1,80 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<div style="float:right">
+
+  <div class="navbar-wrapper">
+    <div class="container-fluid">
+
+      <nav class="navbar navbar-inverse navbar-static-top">
+        <div class="container">
+          <div class="navbar-header">
+            <a class="navbar-brand" href="/">{{ rescue_info.name }}</a>
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+          </div>
+          <div id="navbar" class="navbar-collapse collapse">
+            <img class="pull-left" src="/static/images/symbol_opt.jpg">
+          </div>
+        </div>
+      </nav>
+
+    </div>
+  </div>
+
+
+    <!-- Carousel
+    ================================================== -->
+    <div id="myCarousel" class="carousel slide" data-ride="carousel">
+      <!-- Indicators -->
+      <ol class="carousel-indicators">
+        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+        <li data-target="#myCarousel" data-slide-to="1"></li>
+        <li data-target="#myCarousel" data-slide-to="2"></li>
+        <li data-target="#myCarousel" data-slide-to="3"></li>
+      </ol>
+      <div class="carousel-inner" role="listbox">
+        <div class="item active">
+          <img class="first-slide" src="/static/images/happyway.png">
+          <div class="container">
+            <div class="carousel-caption">
+              <h1>Please visit us!</h1>
+              <p>Address: {{ rescue_info.address }} <br> Phone: {{ rescue_info.phone }} <br> Email: {{ rescue_info.email}} </p>
+            </div>
+          </div>
+        </div>
+        <div class="item">
+          <img class="second-slide" src="/static/images/dexter.png">
+          <div class="container">
+          </div>
+        </div>
+        <div class="item">
+          <img class="third-slide" src="/static/images/austin.jpg">
+          <div class="container">
+          </div>
+        </div>
+        <div class="item">
+          <img class="fourth-slide" src="/static/images/tuxedo.png">
+          <div class="container">
+          </div>
+        </div>
+
+        </div>
+      </div>
+      <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+      </a>
+      <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+      </a>
+    </div><!-- /.carousel -->
+
+  <div style="float:right">
   <div>Consider donating to {{ rescue_info.name }} <br>
     to help support the animals:</div>
   <br>
@@ -14,56 +87,70 @@
     <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
   </form>
 </div>
-  <h2> {{ rescue_info.name }} </h2>
-  <br>
-  <br>
-  <img src= "/{{ rescue_info.img_url }}" alt="GPR" style="">
-  <br>
-  <br>
-  Address: {{ rescue_info.address }}
-  <br>
-  <br>
-  Email: {{ rescue_info.email}}
-  <br>
-  <br>
-  Phone: {{ rescue_info.phone }}
-  <h2> Adopt a Pet: </h2>
-  {% for animal in available_animals %}
-      {{ animal.name }}
-      <br>
-      <a href = "/rescue/{{rescue_info.rescue_id}}/animal/{{ animal.animal_id }}">
-      <img alt="portrait" src = "/{{ animal.img_url }}">
-      </a>
-      <br>
-  {% endfor %}
-  <div id="animals">
-  </div>
+
+
+      <div class="row featurette" style="padding: 10px;">
+        <div class="col-md-5">
+          <p class="lead" style="padding:">Please click on view details under each animal image 
+            to get more information about 
+            our animal residents!</p>
+        </div>
+      </div>
+
+    <br>
+    <br>
+    <div class="container marketing">
+
+      <!-- Three columns of text below the carousel -->
+
+
+      <div id="animals" class="row">
+        {% for animal in available_animals %}
+        <div class="col-lg-4">
+          <img class="img-square" src="/{{animal.img_url}}" alt="Generic placeholder image" width="140" height="140">
+          <h2>{{ animal.name }}</h2>
+          <p><a class="btn btn-default" href="/rescue/{{rescue_info.rescue_id}}/animal/{{ animal.animal_id }}" role="button">View details &raquo;</a></p>
+          <br>
+        </div>
+        {% endfor %}
+      </div><!-- /.row -->
+
+
+    </div><!-- /.container -->
+
+
+  <footer>
+        <p class="pull-right"><a href="/">Back to Endless Pawsibilities</a></p>
+  </footer>
 
   <script>
     var rescue_id = {{ rescue_info.rescue_id }}
-  </script>
-  <script>
     var counter = 0;
-    function amountscrolled(){
-        var winheight = $(window).height() // the height of the browser window
-        var docheight = $(document).height() // the height of the entire document 
-        var scrollTop = $(window).scrollTop() // detects how much the user has scrolled the page 
-        var trackLength = docheight - winheight // total scrollable area of a document
-        var pctScrolled = Math.floor(scrollTop/trackLength * 100) // gets percentage scrolled (ie: 80 NaN if tracklength == 0)
-        console.log(pctScrolled + '% scrolled')
-        
-        function loadMoreAnimals(results) {
-            console.log(results);
-            if (results != '') {
-                console.log(results);
-                $("#animals").append(results);
-            }
-        }
-        if (pctScrolled > 90) { // load more animals
-            $.get('/handle-loading', {rescueid : rescue_id, counter : counter }, loadMoreAnimals);
-            counter = counter + 1;
-            console.log(counter)
-        }
+    var receivedData = true;
+
+    loadMoreAnimals = function(results) {
+      console.log(results);
+      if (results == '') {
+        receivedData = false;
+      } else {
+        $("#animals").append(results);
+      }
+    }
+
+    amountscrolled = function(){
+      var winheight = $(window).height(); // the height of the browser window
+      var docheight = $(document).height(); // the height of the entire document 
+      var scrollTop = $(window).scrollTop(); // detects how much the user has scrolled the page 
+      var trackLength = docheight - winheight; // total scrollable area of a document
+      var pctScrolled = Math.floor(scrollTop/trackLength * 100); // gets percentage scrolled (ie: 80 NaN if tracklength == 0)
+      //var currentPosition = document.documentElement.scrollTop;
+      console.log(pctScrolled + '% scrolled')
+
+      if (pctScrolled > 90 && receivedData) { // load more animals
+        $.get('/load-animals', {rescueid : rescue_id, counter : counter }, loadMoreAnimals);
+        counter = counter + 1;
+        console.log(counter)
+      }
     } 
     
 

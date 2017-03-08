@@ -1,35 +1,36 @@
 {% extends 'base.html' %}
 {% block content %}
 
-  <img alt="portrait" src = "/{{ animal_info.img_url }}">
+<div class="container">
+  <div class="row content">
+    <div class="col-lg-3 sidenav">
+      <h4 style="font-size: 25px;">Information about {{ animal_info.name }}</h4>
+      <ul class="nav nav-pills nav-stacked">
+        <li style="font-size: 20px;">{{ animal_info.gender_type }}</li>
+        <li style="font-size: 20px;">{{ animal_info.age_category }}</li>
+        <li style="font-size: 20px;">{{ animal_info.size_category }}</li>
+        <li style="font-size: 20px;">{{ animal_info.breed_type }}</li>
+      </ul><br>
+    </div>
 
-  <br>
-  <br>
+    <div class="col-sm-9">
+      <h2>{{ animal_info.name }}</h2>
+      <img style="width:400px;" src="/{{ animal_info.img_url }}">
+      <br>
+      <br>
+      <p class="bio">{{ animal_info.bio}}</p>
+    
 
-  Name: {{ animal_info.name }}
-  <br>
-  <br>
+     
+        </div>
+      </div>
+    </div>
 
-  Gender: {{ animal_info.gender_type }}
+  <footer>
+        <p class="pull-right"><a href="/rescue/{{ rescue_info.rescue_id }}">Back to {{ rescue_info.name }}</a></p>
+  </footer>
 
-  <br>
-  <br>
 
-  Age: {{ animal_info.age_category}}
 
-  <br>
-  <br>
-
-  Size: {{ animal_info.size_category }}
-
-  <br>
-  <br>
-
-  Breed: {{ animal_info.breed_type }}
-
-  <br>
-  <br>
-
-  Bio: {{ animal_info.bio }}
 
 {% endblock %}

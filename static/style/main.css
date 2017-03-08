@@ -1,0 +1,29 @@
+.navbar {
+    padding: 10px;
+    background: rgba(255,255,255,0.4) ;
+}
+
+.navbar-inverse {
+    border: 0px;
+}
+
+.navbar-brand {
+    padding-top: 35px;
+    font-size: 80px;
+}
+
+.carousel-control {
+    max-height: 600px;
+}
+
+.navbar-inverse .navbar-brand {
+    color: #4d4d4d;
+}
+
+.bio {
+    font-size: 20px;
+}
+
+.nav .nav-pills .nav-stacked {
+    padding: 10px;
+}

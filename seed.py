@@ -33,9 +33,10 @@ def load_rescues():
 
     for row in open('seed_data/u.rescue'):
         row = row.rstrip()
-        rescue_id, name, phone, address, email = row.split("|")
+        rescue_id, img_url, name, phone, address, email = row.split("|")
 
         rescue = Rescue(name=name,
+                        img_url=img_url,
                         phone=phone,
                         address=address,
                         email=email)
@@ -51,8 +52,9 @@ def load_animals():
 
     for row in open("seed_data/u.animal"):
         row = row.rstrip()
-        animal_id, name, rescue_id, gender_id, age_id, size_id, breed_id = row.split("|")
+        animal_id, img_url, name, rescue_id, gender_id, age_id, size_id, breed_id = row.split("|")
         animal = Animal(name=name,
+                        img_url=img_url,
                         rescue_id=rescue_id,
                         gender_id=gender_id,
                         age_id=age_id,
