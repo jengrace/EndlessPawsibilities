@@ -6,7 +6,9 @@ Endless Pawsibilities provides a service for animal rescues to create their own 
 
 <h2>Technologies</h2>
 Backend: Python, Flask, PostgreSQL, SQLAlchemy
+<br>
 Frontend: JavaScript, jQuery, Bootstrap, HTML5, CSS3, Jinja2
+<br>
 APIs: PayPal
 
 <h2>Features</h2>
