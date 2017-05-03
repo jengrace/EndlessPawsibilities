@@ -225,8 +225,7 @@ def handle_dynamic_loading():
     for animal in animals:
         animal_id = animal.animal_id
         animal_img = animal.img_url
-        #a = '<br><a href = "/rescue/%s/animal/%s"><img alt="portrait" src = "/%s"></a><br>' % (rescue_id, animal_id, animal_img)
-        a = '<div class="col-lg-4"><img class="img-square" src="/%s" alt="Generic placeholder image" width="140" height="140"><h2>%s</h2><p><a class="btn btn-default" href="/rescue/%s/animal/%s" role="button">View details &raquo;</a></p><br></div>' % (animal_img, animal.name, rescue_id,  animal_id)
+        a = '<div class="col-lg-4"><img class="img-square" src="/%s" alt="Generic placeholder image" width="140" height="140"><h2>%s</h2><p><a class="btn btn-default" href="/rescue/%s/animal/%s" role="button">View details &raquo;</a></p><br></div>' % (animal_img, animal.name, rescue_id, animal_id)
         my_html = my_html + a
     return my_html
 
