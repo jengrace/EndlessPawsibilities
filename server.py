@@ -4,14 +4,13 @@ from flask_debugtoolbar import DebugToolbarExtension
 from jinja2 import StrictUndefined
 from model import Rescue, connect_to_db
 import control as c
-import sqlalchemy
 import model as m
-import os
 
 
 app = Flask(__name__)
 
-app.secret_key = 'ABC'
+# Eventually, this key needs to be replaced by an environment variable.
+app.secret_key = ''
 
 app.jinja_env.undefined = StrictUndefined
 
@@ -35,7 +34,6 @@ def load_rescue_info(rescue_id):
     rescue_info = c.get_rescue(rescue_id)
     title = rescue_info.name
     available_animals = c.get_available_animals(rescue_id)
-    #available_animals = available_animals[:10]
 
     return render_template('rescue_info.html',
                            rescue_info=rescue_info,
@@ -232,14 +230,14 @@ def handle_dynamic_loading():
 if __name__ == "__main__":
     # We have to set debug=True here, since it has to be True at the
     # point that we invoke the DebugToolbarExtension
-    #app.debug = True
-    #app.jinja_env.auto_reload = app.debug  # make sure templates, etc. are not cached in debug mode
+    app.debug = False
+    app.jinja_env.auto_reload = app.debug  # make sure templates, etc. are not cached in debug mode
 
     connect_to_db(app)
 
-    # Use the DebugToolbar
-    #DebugToolbarExtension(app)
-    #app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
+    #Use the DebugToolbar
+    DebugToolbarExtension(app)
+    app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 
     # File uploads
     UPLOAD_FOLDER = 'static/images/'
